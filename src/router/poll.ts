@@ -37,10 +37,11 @@ router.get(
 router.post(
   "/create",
   wrap(async (req, res) => {
-    const { name, options, password } = req.body;
+    const { name, description, options, password } = req.body;
     await Poll.create({
       name,
       options,
+      description,
       password: hashSync(password, 10)
     });
 
