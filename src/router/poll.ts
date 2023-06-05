@@ -18,16 +18,19 @@ router.get(
 router.get(
   "/vote/:pollId/:option",
   wrap(async (req, res) => {
-    const { pollId, option } = req.params;
+    const { pollId, option, ip } = req.params;
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
     if (poll.options.length < Number(option)) {
       throw new Error(`The poll has only ${poll.options.length} options.`);
     } else if (!poll.open) {
       throw new Error("The poll is closed.");
+    } else if (poll.voters.includes(ip)) {
+      throw new Error("You already voted.");
     }
 
     poll.votes.push(Number(option));
+    poll.voters.push(ip);
     await poll.save();
 
     res.json({ code: 200 });

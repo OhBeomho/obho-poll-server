@@ -14,6 +14,10 @@ const pollSchema = new Schema({
     type: [Number],
     default: []
   },
+  voters: {
+    type: [String],
+    default: []
+  },
   open: {
     type: Boolean,
     default: true
