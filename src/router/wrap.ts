@@ -5,9 +5,10 @@ export const wrap = (
 ) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
+      res.header("Access-Control-Allow-Origin", "*");
       return await asyncFn(req, res, next);
     } catch (error) {
-      res.status(500).json({ code: 500, error });
+      res.status(500).json({ code: 500, error: (error as Error).message });
     }
   };
 };

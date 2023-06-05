@@ -8,7 +8,7 @@ const router = Router();
 router.get(
   "/:pollId",
   wrap(async (req, res) => {
-    const { pollID: pollId } = req.params;
+    const { pollId } = req.params;
     const poll = await Poll.findById(pollId);
 
     if (!poll) {

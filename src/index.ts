@@ -2,9 +2,11 @@ import express from "express";
 import { connectDB } from "./db";
 import config from "./config";
 import pollRouter from "./router/poll";
+import cors from "cors";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
