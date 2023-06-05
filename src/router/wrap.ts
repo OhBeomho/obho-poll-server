@@ -7,7 +7,7 @@ export const wrap = (
     try {
       return await asyncFn(req, res, next);
     } catch (error) {
-      res.status(500).json({ error });
+      res.status(500).json({ code: 500, error });
     }
   };
 };

@@ -11,7 +11,7 @@ router.get(
     const { pollID: pollId } = req.params;
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
-    res.json({ poll });
+    res.json({ code: 200, poll });
   })
 );
 
@@ -30,7 +30,7 @@ router.get(
     poll.votes.push(Number(option));
     await poll.save();
 
-    res.sendStatus(200);
+    res.json({ code: 200 });
   })
 );
 
@@ -38,14 +38,16 @@ router.post(
   "/create",
   wrap(async (req, res) => {
     const { name, description, options, password } = req.body;
-    await Poll.create({
-      name,
-      options,
-      description,
-      password: hashSync(password, 10)
-    });
+    const pollId = (
+      await Poll.create({
+        name,
+        options,
+        description,
+        password: hashSync(password, 10)
+      })
+    )._id;
 
-    res.sendStatus(200);
+    res.json({ code: 200, pollId });
   })
 );
 
@@ -56,14 +58,14 @@ router.get(
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
     if (!compareSync(password, poll.password)) {
-      res.sendStatus(401);
+      res.status(401).send({ code: 401, error: "Incorrect password." })
       return;
     }
 
     poll.open = false;
     await poll.save();
 
-    res.sendStatus(200);
+    res.json({ code: 200 });
   })
 );
 
@@ -74,13 +76,13 @@ router.get(
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
     if (!compareSync(password, poll.password)) {
-      res.sendStatus(401);
+      res.status(401).send({ code: 401, error: "Incorrect password." })
       return;
     }
 
     await Poll.findByIdAndDelete(pollId);
 
-    res.sendStatus(200);
+    res.json({ code: 200 });
   })
 );
 
