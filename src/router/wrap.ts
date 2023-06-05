@@ -4,8 +4,9 @@ export const wrap = (
   asyncFn: (req: Request, res: Response, next?: NextFunction) => Promise<void>
 ) => {
   return async (req: Request, res: Response, next: NextFunction) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
     try {
-      res.header("Access-Control-Allow-Origin", "*");
       return await asyncFn(req, res, next);
     } catch (error) {
       res.status(500).json({ code: 500, error: (error as Error).message });
