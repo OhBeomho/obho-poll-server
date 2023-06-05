@@ -9,7 +9,12 @@ router.get(
   "/:pollId",
   wrap(async (req, res) => {
     const { pollID: pollId } = req.params;
-    const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
+    const poll = await Poll.findById(pollId);
+
+    if (!poll) {
+      res.status(404).json({ code: 404, error: "Poll not found." });
+      return;
+    }
 
     res.json({ code: 200, poll });
   })
