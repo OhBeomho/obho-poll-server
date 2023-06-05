@@ -58,7 +58,7 @@ router.get(
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
     if (!compareSync(password, poll.password)) {
-      res.status(401).send({ code: 401, error: "Incorrect password." })
+      res.status(401).send({ code: 401, error: "Incorrect password." });
       return;
     }
 
@@ -69,14 +69,14 @@ router.get(
   })
 );
 
-router.get(
-  "/remove/:pollId/:password",
+router.delete(
+  "/:pollId/:password",
   wrap(async (req, res) => {
     const { pollId, password } = req.params;
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
     if (!compareSync(password, poll.password)) {
-      res.status(401).send({ code: 401, error: "Incorrect password." })
+      res.status(401).send({ code: 401, error: "Incorrect password." });
       return;
     }
 
