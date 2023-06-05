@@ -15,10 +15,11 @@ router.get(
   })
 );
 
-router.get(
-  "/vote/:pollId/:option",
+router.post(
+  "/vote/:pollId",
   wrap(async (req, res) => {
-    const { pollId, option, ip } = req.params;
+    const { pollId } = req.params;
+    const { option, ip } = req.body;
     const poll = await Poll.findById(pollId).orFail(new Error("Poll not found."));
 
     if (poll.options.length < Number(option)) {
