@@ -6,7 +6,12 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://obho-poll.netlify.app",
+    credentials: true
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
