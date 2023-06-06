@@ -14,12 +14,11 @@ export const wrap = (
       const errMsg = (error as Error).message;
       const code = Number(errMsg.substring(0, 3)) || 500;
       const message = errMsg.substring(4);
-      const response = res.status(code);
 
-      response.setHeader("Access-Control-Allow-Origin", "https://obho-poll.netlify.app");
-      response.setHeader("Access-Control-Allow-Methods", "*");
-      response.setHeader("Access-Control-Allow-Headers", "*");
-      response.json({ error: message });
+      res.status(code).setHeader("Access-Control-Allow-Origin", "https://obho-poll.netlify.app");
+      res.status(code).setHeader("Access-Control-Allow-Methods", "*");
+      res.status(code).setHeader("Access-Control-Allow-Headers", "*");
+      res.status(code).json({ error: message });
     }
   };
 };
