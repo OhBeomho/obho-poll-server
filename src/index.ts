@@ -16,7 +16,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("/vote/:pollId", cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 connectDB()
   .then(() =>
