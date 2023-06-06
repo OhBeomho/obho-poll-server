@@ -5,10 +5,6 @@ import { compareSync, hashSync } from "bcrypt";
 
 const router = Router();
 
-router.options("*", (req, res) =>
-  res.writeHead(204, { "Access-Control-Allow-Origin": "https://obho-poll.netlify.app" })
-);
-
 router.get(
   "/:pollId",
   wrap(async (req, res) => {
