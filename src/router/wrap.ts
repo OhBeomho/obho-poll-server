@@ -13,8 +13,7 @@ export const wrap = (
     } catch (error) {
       const errMsg = (error as Error).message;
       const code = Number(errMsg.substring(0, 3)) || 500;
-      const message = errMsg.substring(4);
-      console.log(code, message, errMsg);
+      const message = Number(errMsg.substring(0, 3)) ? errMsg.substring(4) : errMsg;
 
       res.status(code).setHeader("Access-Control-Allow-Origin", "https://obho-poll.netlify.app");
       res.status(code).setHeader("Access-Control-Allow-Methods", "*");

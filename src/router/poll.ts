@@ -2,6 +2,7 @@ import { Router } from "express";
 import { wrap } from "./wrap";
 import Poll from "../db/schema/Poll";
 import { compareSync, hashSync } from "bcrypt";
+import mongoose from "mongoose";
 
 const router = Router();
 
@@ -16,6 +17,11 @@ router.get(
   "/:pollId",
   wrap(async (req, res) => {
     const { pollId } = req.params;
+
+    if (!mongoose.isValidObjectId(pollId)) {
+      throw new Error(`400 ${pollId} is not valid poll id.`);
+    }
+
     const poll = await Poll.findById(pollId).orFail(new Error("404 Poll not found."));
 
     res.json({ poll });
@@ -27,6 +33,11 @@ router.post(
   wrap(async (req, res) => {
     const { pollId } = req.params;
     const { option, ip } = req.body;
+
+    if (!mongoose.isValidObjectId(pollId)) {
+      throw new Error(`400 ${pollId} is not valid poll id.`);
+    }
+
     const poll = await Poll.findById(pollId).orFail(new Error("404 Poll not found."));
 
     if (poll.options.length < Number(option)) {
@@ -66,6 +77,11 @@ router.get(
   "/close/:pollId/:password",
   wrap(async (req, res) => {
     const { pollId, password } = req.params;
+
+    if (!mongoose.isValidObjectId(pollId)) {
+      throw new Error(`400 ${pollId} is not valid poll id.`);
+    }
+
     const poll = await Poll.findById(pollId).orFail(new Error("404 Poll not found."));
 
     if (!compareSync(password, poll.password)) {
@@ -83,6 +99,11 @@ router.delete(
   "/:pollId/:password",
   wrap(async (req, res) => {
     const { pollId, password } = req.params;
+
+    if (!mongoose.isValidObjectId(pollId)) {
+      throw new Error(`400 ${pollId} is not valid poll id.`);
+    }
+
     const poll = await Poll.findById(pollId).orFail(new Error("404 Poll not found."));
 
     if (!compareSync(password, poll.password)) {
