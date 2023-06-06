@@ -2,7 +2,7 @@ import express from "express";
 import { connectDB } from "./db";
 import config from "./config";
 import pollRouter from "./router/poll";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 
 const app = express();
 
@@ -10,9 +10,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", pollRouter);
 
-const corsOptions = {
+const corsOptions: CorsOptions = {
   origin: "https://obho-poll.netlify.app",
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "DELETE"]
 };
 
 app.use(cors(corsOptions));
