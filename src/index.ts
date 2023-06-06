@@ -1,17 +1,20 @@
 import express from "express";
 import { connectDB } from "./db";
 import config from "./config";
-import pollRouter from "./router/poll";
-import cors, { CorsOptions } from "cors";
+import router from "./router/poll";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/", pollRouter);
+app.use("/", router);
 
-app.use(cors());
-app.options("*", cors());
+app.options("*", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://obho-poll.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.end();
+});
 
 connectDB()
   .then(() =>
