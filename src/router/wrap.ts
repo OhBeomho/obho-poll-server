@@ -14,6 +14,7 @@ export const wrap = (
       const errMsg = (error as Error).message;
       const code = Number(errMsg.substring(0, 3)) || 500;
       const message = errMsg.substring(4);
+      console.log(code, message, errMsg);
 
       res.status(code).setHeader("Access-Control-Allow-Origin", "https://obho-poll.netlify.app");
       res.status(code).setHeader("Access-Control-Allow-Methods", "*");
