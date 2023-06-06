@@ -39,6 +39,7 @@ router.post(
     poll.voters.push(ip);
     await poll.save();
 
+    res.setHeader("Access-Control-Allow-Origin", "https://obho-poll.netlify.app");
     res.json({ code: 200 });
   })
 );
