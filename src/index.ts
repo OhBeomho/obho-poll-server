@@ -9,12 +9,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", pollRouter);
-app.use(
-  cors({
-    origin: "https://obho-poll.netlify.app",
-    credentials: true
-  })
-);
+
+const corsOptions = {
+  origin: "https://obho-poll.netlify.app",
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.options("/vote/:pollId", cors(corsOptions));
 
 connectDB()
   .then(() =>
