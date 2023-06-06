@@ -13,7 +13,7 @@ app.use("/", pollRouter);
 const corsOptions: CorsOptions = {
   origin: "https://obho-poll.netlify.app",
   credentials: true,
-  methods: ["GET", "POST", "DELETE"]
+  allowedHeaders: ["Content-Type"]
 };
 
 app.use(cors(corsOptions));
