@@ -52,7 +52,7 @@ router.post(
     poll.voters.push(ip);
     await poll.save();
 
-    res.sendStatus(200);
+    res.json({});
   })
 );
 
@@ -91,7 +91,7 @@ router.get(
     poll.open = false;
     await poll.save();
 
-    res.sendStatus(200);
+    res.json({});
   })
 );
 
@@ -112,7 +112,7 @@ router.delete(
 
     await Poll.findByIdAndDelete(pollId);
 
-    res.sendStatus(200);
+    res.json({});
   })
 );
 
